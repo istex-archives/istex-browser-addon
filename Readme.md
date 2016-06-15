@@ -26,10 +26,10 @@ Currently:
 
 ##Examples
 
-![Link in Wikipedia](doc/imgages/exemple-wikipedia.png)
+![Link in Wikipedia](doc/images/exemple-wikipedia.png)
 
-![Link in PubMed](doc/imgages/exemple-pubmed.png)
+![Link in PubMed](doc/images/exemple-pubmed.png)
 
-![Link in Elsevier science-direct](doc/imgages/exemple-science-direct.png)
+![Link in Elsevier science-direct](doc/images/exemple-science-direct.png)
 
-![Example of citation service for a displayed ISTEX PDF](doc/imgages/exemple-science-direct.png)
+![Example of citation service for a displayed ISTEX PDF](doc/images/exemple-science-direct.png)
