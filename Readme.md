@@ -26,10 +26,16 @@ Currently:
 
 ##Examples
 
+* Example of links on a Wikipedia page: https://en.wikipedia.org/wiki/Superfluid_helium-4
+
 ![Link in Wikipedia](doc/images/exemple-wikipedia.png)
+
+* Example of links in NIH PubMed
 
 ![Link in PubMed](doc/images/exemple-pubmed.png)
 
+* Example in Elsevier's Science direct
 ![Link in Elsevier science-direct](doc/images/exemple-science-direct.png)
 
-![Example of citation service for a displayed ISTEX PDF](doc/images/exemple-science-direct.png)
+* Example of a citation created from the ISTEX metadata when viewing an ISTEX PDF
+![Example of citation service for a displayed ISTEX PDF](doc/images/exemple-citation.png)
