@@ -1,8 +1,8 @@
 {
   "title": "ISTEX Browser addon",
   "name": "istex",
-  "version": "0.0.2",
-  "description": "A basic add-on for identifying ISTEX resources in the browser pages.",
+  "version": "0.0.3",
+  "description": "An add-on for identifying ISTEX resources in the browser pages.",
   "main": "index.js",
   "author": "Patrice Lopez",
   "engines": {

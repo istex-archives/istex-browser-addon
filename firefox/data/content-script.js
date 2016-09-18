@@ -67,7 +67,8 @@ var ISTEXLinkInserter = {
 		DOI_ADDRESS : 2,
 		PUBMED_ADDRESS : 3,
 		HAS_OPEN_URL : 4,
-		HAS_PII : 5
+		HAS_PII : 5,
+		GOOGLE_SCHOLAR_OPENURL : 6
 	},
 
 	onDOMContentLoaded : function(event) {		
@@ -200,6 +201,9 @@ var ISTEXLinkInserter = {
 				// doi 
 				this.createDoiLink(href, linkk);
 			}
+			else if (flags == this.flags.GOOGLE_SCHOLAR_OPENURL) {
+				this.createGoogleScholarLink(href, linkk);
+			}
 			else if (flags == this.flags.PUBMED_ADDRESS) { 
 				// PubMed ID
 				this.createPubmedLink(href, linkk);
@@ -225,36 +229,37 @@ var ISTEXLinkInserter = {
 		if (linkk.getAttribute("name") == 'ISTEXVisited') {
 			return mask;
 		}
+		if (linkk.getAttribute("classname") == 'istex-link') {
+			return mask;
+		}
 		if (href.indexOf(istex.istexBaseURL()) != -1) {
 			return mask;
 		}
 
-		// Check if the href contains a supported reference to an open url link
-		if (href.indexOf('exlibrisgroup.com') != -1 && this.openUrlPattern.test(href)) {
-			mask = this.flags.OPEN_URL_BASE;
-		}
-		if (href.indexOf('serialssolutions.com') != -1 && this.openUrlPattern.test(href)) {
-			if (linkk.getAttribute("class") != 'documentLink') {
-				mask = this.flags.OPEN_URL_BASE;
-			}
-		}
-
-		// Check if the href contains a DOI link
-		if ((href.indexOf('dx.doi.org') != -1 || 
+		// check if we have a Google Scholar pre-OpenURL link (the link that will call the OpenURL)
+		var contentText = linkk.textContent;
+		if (href.indexOf('scholar.google.') != -1 && (contentText === 'ISTEX [PDF]')) {
+			mask = this.flags.GOOGLE_SCHOLAR_OPENURL;
+			//return mask;
+		} else if ((href.indexOf('dx.doi.org') != -1 || 
 				href.indexOf('doi.acm.org') != -1 || 
 				href.indexOf('dx.crossref.org') != -1)				
 				&& this.doiPattern.test(href)) {
+			// Check if the href contains a DOI link
 			mask = this.flags.DOI_ADDRESS;
-		}
-
-		// Check if the href contains a PMID link
-		if (href.indexOf('ncbi.nlm.nih.gov') != -1 && this.pubmedPattern.test(href)) {
+		} else if (href.indexOf('ncbi.nlm.nih.gov') != -1 && this.pubmedPattern.test(href)) {
+			// Check if the href contains a PMID link
 			mask = this.flags.PUBMED_ADDRESS;
-		}
-
-		// Check if the href contains a PII link
-		if (this.regexPIIPattern.test(href)) {	
+		} else if (this.regexPIIPattern.test(href)) {	
+			// Check if the href contains a PII link
 			mask = this.flags.HAS_PII;
+		} else if (href.indexOf('exlibrisgroup.com') != -1 && this.openUrlPattern.test(href)) {
+			// Check if the href contains a supported reference to an open url link
+			mask = this.flags.OPEN_URL_BASE;
+		} else if (href.indexOf('serialssolutions.com') != -1 && this.openUrlPattern.test(href)) {
+			if (linkk.getAttribute("class") != 'documentLink') {
+				mask = this.flags.OPEN_URL_BASE;
+			}
 		}
 
 		if (istex.debug() && mask > 0) {
@@ -302,6 +307,14 @@ var ISTEXLinkInserter = {
 			linkk.parentNode.insertBefore(newLink, linkk.nextSibling);
 			linkk.setAttribute('name', "ISTEXVisited");
 		}
+	},
+
+	createGoogleScholarLink : function(href, linkk) {
+		// we simply make the ISTEX button with the existing google scholar url (which will call the ISTEX OpenURL service) 
+		linkk.textContent = "ISTEX";
+		linkk.name = "ISTEXLink";
+		linkk.className = "istex-link";
+		//linkk.setAttribute('name', "ISTEXVisited");
 	},
 
 	// Wikipedia for instance is using COInS spans 
