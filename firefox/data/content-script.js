@@ -293,7 +293,7 @@ var ISTEXLinkInserter = {
 	},
 
 	createPubmedLink : function(href, linkk) {
-		var istexUrl = href.replace(this.pubmedPattern, "rft_id=info:pmi/d$2&rft.genre=article,chapter,bookitem&svc.fulltext=yes");
+		var istexUrl = href.replace(this.pubmedPattern, "rft_id=info:pmid/$2&rft.genre=article,chapter,bookitem&svc.fulltext=yes");
 		var newLink = this.makeLink(istexUrl, false);
 		linkk.parentNode.insertBefore(newLink, linkk.nextSibling);
 		linkk.setAttribute('name', "ISTEXVisited");
