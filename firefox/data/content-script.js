@@ -293,7 +293,7 @@ var ISTEXLinkInserter = {
 	},
 
 	createPubmedLink : function(href, linkk) {
-		var istexUrl = href.replace(this.pubmedPattern, "rft_id=info:pmid/$2&rft.genre=article,chapter,bookitem&svc.fulltext=yes");
+		var istexUrl = href.replace(this.pubmedPattern, "rft_id=info:pmi/d$2&rft.genre=article,chapter,bookitem&svc.fulltext=yes");
 		var newLink = this.makeLink(istexUrl, false);
 		linkk.parentNode.insertBefore(newLink, linkk.nextSibling);
 		linkk.setAttribute('name', "ISTEXVisited");
@@ -363,9 +363,9 @@ var ISTEXLinkInserter = {
 					// insert the sid in the url for usage statistics reason
 					if (istexUrl.indexOf('sid=') === -1) {
 						if (istexUrl.indexOf('?') === -1) {
-							istexUrl += '?sid=istex-widgets';
+							istexUrl += '?sid=istex-browser-addon';
 						} else {
-							istexUrl += '&sid=istex-widgets';
+							istexUrl += '&sid=istex-browser-addon';
 						}
 					}
 
