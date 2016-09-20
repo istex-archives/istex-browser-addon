@@ -343,7 +343,7 @@ var ISTEXLinkInserter = {
 	 * @param {Object} href
 	 */
 	makeLink : function(href) {
-		istex.message("making link: " + this.openURLPrefix + href + "&noredirect");
+		istex.message("making link: " + this.openURLPrefix + href + "&noredirect&sid=istex-browser-addon");
 
 		var document = (window.content) ? window.content.document : window.document;
 		var span = document.createElement('span');
@@ -359,6 +359,15 @@ var ISTEXLinkInserter = {
 				var istexUrl = json.resourceUrl;
 				if (istexUrl) {
 					istexUrl = istexUrl.replace("/original", "/pdf");
+
+					// insert the sid in the url for usage statistics reason
+					if (istexUrl.indexOf('sid=') === -1) {
+						if (istexUrl.indexOf('?') === -1) {
+							istexUrl += '?sid=istex-widgets';
+						} else {
+							istexUrl += '&sid=istex-widgets';
+						}
+					}
 
 					// set the added link, this will avoid an extra call to the OpenURL API and fix the access url
 					var child = document.createElement('a');
@@ -382,7 +391,7 @@ var ISTEXLinkInserter = {
 		oReq.addEventListener("load", function() {
 			ISTEXLinkInserter.imgLoadHandler(oReq, parent);
 		});
-		oReq.open("GET", ISTEXLinkInserter.openURLPrefix + href + "&noredirect");
+		oReq.open("GET", ISTEXLinkInserter.openURLPrefix + href + "&noredirect&sid=istex-browser-addon");
 		oReq.send();
 	}
 };
