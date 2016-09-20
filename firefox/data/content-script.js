@@ -58,7 +58,7 @@ var ISTEXLinkInserter = {
 	skipPattern : new RegExp("^[:\\/\\s]+$","i"),
 
 	// PII pattern in links
-	regexPIIPattern : new RegExp("\\/pii\\/([A-Z0-9]{16,20})","gi"),
+	regexPIIPattern : new RegExp("\\pii\\/([A-Z0-9]{16,20})","gi"),
 	
 	// The last group should be the parameters for openurl resolver - TBD add EBSCO
 	openUrlPattern : /.*(sfxhosted|sfx?|search|.hosted).(exlibrisgroup|serialssolutions).com.*(\/|%2(F|f))?\?*(.*)/,
@@ -302,7 +302,7 @@ var ISTEXLinkInserter = {
 	createPIILink : function(href, linkk) {
 		var matches = href.match(this.regexPIIPattern);
 		if (matches && (matches.length>0)) {
-			var istexUrl = "rft_id=info:pii/"+matches[0]+"&rft.genre=article,chapter,bookitem&svc.fulltext=yes";
+			var istexUrl = "rft_id=info:"+matches[0]+"&rft.genre=article,chapter,bookitem&svc.fulltext=yes";
 			var newLink = this.makeLink(istexUrl, false);
 			linkk.parentNode.insertBefore(newLink, linkk.nextSibling);
 			linkk.setAttribute('name', "ISTEXVisited");
