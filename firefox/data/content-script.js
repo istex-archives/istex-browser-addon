@@ -343,7 +343,7 @@ var ISTEXLinkInserter = {
 	 * @param {Object} href
 	 */
 	makeLink : function(href) {
-		istex.message("making link: " + this.openURLPrefix + href + "&noredirect");
+		istex.message("making link: " + this.openURLPrefix + href + "&noredirect&sid=istex-browser-addon");
 
 		var document = (window.content) ? window.content.document : window.document;
 		var span = document.createElement('span');
@@ -351,14 +351,14 @@ var ISTEXLinkInserter = {
 		return span;
 	},
 
-	imgLoadHandler : function(req, parent) {
+	imgLoadHandler : function(req, parent, sid) {
 		if ( (req.responseText.indexOf("404") == -1) && (req.responseText.indexOf("300") == -1) ) {			
 			// get the resource url
 			var json = JSON.parse(req.responseText);
 			if (json) {
 				var istexUrl = json.resourceUrl;
 				if (istexUrl) {
-					istexUrl = istexUrl.replace("/original", "/pdf");
+					istexUrl = istexUrl.replace("/original", "/pdf") + '?sid=' + sid;
 
 					// set the added link, this will avoid an extra call to the OpenURL API and fix the access url
 					var child = document.createElement('a');
@@ -377,14 +377,47 @@ var ISTEXLinkInserter = {
 		}
 	},
 
-	makeChild : function(href, document, parent) {
+	makeChild: function(href, document, parent) {
+		
+		// insert the sid in the openurl for usage statistics reason
+		if (href.indexOf('sid=') === -1) {
+			// sid is alone in the given openurl
+			href += '&sid=istex-browser-addon';
+		} else {
+			// sid is not alone in the given openurl
+			// then we have to handle special case if
+			// the sid value is empty
+			// (ex: ?foo=bar&sid= or ?sid=&foo=bar)
+			if (/sid=(&|$)/.test(href)) {
+				href = href.replace('sid=', 'sid=istex-browser-addon');							
+			} else  {
+				href = href.replace('sid=', 'sid=istex-browser-addon,');
+			}
+		}
+		var sid = this.parseQuery(href).sid;
+
 		var oReq = new XMLHttpRequest();
 		oReq.addEventListener("load", function() {
-			ISTEXLinkInserter.imgLoadHandler(oReq, parent);
+			ISTEXLinkInserter.imgLoadHandler(oReq, parent, sid);
 		});
 		oReq.open("GET", ISTEXLinkInserter.openURLPrefix + href + "&noredirect");
 		oReq.send();
+	},
+
+	/**
+	 * To parse the querystring
+	 * (used for extracting sid value)
+	 */
+	parseQuery: function (qstr) {
+		var query = {};
+		var a = qstr.substr(1).split('&');
+		for (var i = 0; i < a.length; i++) {
+				var b = a[i].split('=');
+				query[decodeURIComponent(b[0])] = decodeURIComponent(b[1] || '');
+    }
+		return query;
 	}
+
 };
 
 ISTEXLinkInserter.onDOMContentLoaded();
