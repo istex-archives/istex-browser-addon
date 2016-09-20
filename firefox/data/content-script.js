@@ -44,13 +44,13 @@ var ISTEXLinkInserter = {
 	openURLPrefix : "https://api.istex.fr/document/openurl?",
 
 	// DOI pattern
-	doiPattern : /http:\/\/(dx\.doi\.org|doi\.acm\.org|dx\.crossref\.org).*\/(10\..*(\/|%2(F|f)).*)/,
+	doiPattern : /\/\/(dx\.doi\.org|doi\.acm\.org|dx\.crossref\.org).*\/(10\..*(\/|%2(F|f)).*)/,
 	// the index of the group where to find the DOI
 	doiGroup : 2,
 	regexDoiPatternConservative : new RegExp("(10\\.\\d{4,5}\\/[\\S]+[^;,.\\s])", "gi"),
 
 	// PMID
-	pubmedPattern : new RegExp("http:\\/\\/.*\\.ncbi\\.nlm\\.nih\\.gov.*\\/pubmed.*(\\/|=)([0-9]{4,12})", "i"),
+	pubmedPattern : new RegExp("\\/\\/.*\\.ncbi\\.nlm\\.nih\\.gov.*\\/pubmed.*(\\/|=)([0-9]{4,12})", "i"),
 	pubmedGroup : 1,
 	regexPMIDPattern : new RegExp("(PubMed\\s?(ID\\s?:?|:)|PM\\s?ID)[\\s:\\/]?\\s*([0-9]{4,12})","gi"),
 	regexPrefixPMIDPattern : new RegExp("((PubMed\\s?(ID)?:?)|(PM\\s?ID))[\\s:\\/]*$","i"),
