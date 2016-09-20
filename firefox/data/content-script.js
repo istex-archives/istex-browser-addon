@@ -367,6 +367,14 @@ var ISTEXLinkInserter = {
 						} else {
 							istexUrl += '&sid=istex-browser-addon';
 						}
+					} else {
+						// handle the empty sid value cases
+						// (ex: ?foo=bar&sid= or ?sid=&foo=bar
+						if (/sid=(&|$)/.test(istexUrl)) {
+							istexUrl = istexUrl.replace('sid=', 'sid=istex-browser-addon');							
+						} else  {
+							istexUrl = istexUrl.replace('sid=', 'sid=istex-browser-addon,');
+						}
 					}
 
 					// set the added link, this will avoid an extra call to the OpenURL API and fix the access url
