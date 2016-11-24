@@ -1,6 +1,6 @@
 var istex = {
 	istexBaseURL : "api.istex.fr/document/openurl",
-	maxPageLinks : 2500,
+	theMaxPageLinks : 2500,
 	debug : true,
 
 	message : function(aMessage) {
@@ -25,7 +25,7 @@ var istex = {
 	},
 
 	maxPageLinks : function() {
-       	return this.maxPageLinks;
+       	return this.theMaxPageLinks;
     },
 
     istexBaseURL : function() {
@@ -314,6 +314,7 @@ var ISTEXLinkInserter = {
 		linkk.textContent = "ISTEX";
 		linkk.name = "ISTEXLink";
 		linkk.className = "istex-link";
+		linkk.target = "_blank";
 		//linkk.setAttribute('name', "ISTEXVisited");
 	},
 
