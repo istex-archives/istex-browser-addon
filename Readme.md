@@ -1,3 +1,5 @@
+__DEPRECATED__ - use [istex-web-extension](https://github.com/istex/istex-web-extension) instead !
+
 #ISTEX
 A basic add-on for identifying dynamically ISTEX resources in the browser pages.
 
