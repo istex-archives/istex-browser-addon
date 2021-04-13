@@ -1,9 +1,9 @@
 __DEPRECATED__ - use [istex-web-extension](https://github.com/istex/istex-web-extension) instead !
 
-#ISTEX
+# ISTEX
 A basic add-on for identifying dynamically ISTEX resources in the browser pages.
 
-##Functionalities
+## Functionalities
 
 This add-on performs the following tasks:
 
@@ -11,7 +11,7 @@ This add-on performs the following tasks:
 
 * Propose a citation service when an ISTEX PDF is opened. When opening the ISTEX PDF, an add-on icon on the top menu bar is activated. Clicking on the icon will open a panel with the citation information corresponding to the publication. As the authoritative publisher's metadata are used (the MODS resource of the ISTEX API), the citation should be of very high quality. 
 
-##Supported identifiers and protocols
+## Supported identifiers and protocols
 
 Linking work at item level (e.g. article) and will try to identifying the following identifiers in the web page:
 
@@ -20,13 +20,13 @@ Linking work at item level (e.g. article) and will try to identifying the follow
 * PubMed ID (PMID)
 * Publisher Item Identifier (PII)
 
-##Supported browser
+## Supported browser
 
 Currently: 
 
 * Firefox
 
-##Examples
+## Examples
 
 * Example of links on a Wikipedia page: https://en.wikipedia.org/wiki/Superfluid_helium-4
 
